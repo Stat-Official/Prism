@@ -1,6 +1,5 @@
 # 📰 Prism: 하나의 자료, 여러 시선
 
-<img width="3164" height="2070" alt="image" src="https://github.com/user-attachments/assets/d47a42e5-fb48-4132-99d6-0dd334cec409" />
 
 **🔭 통계 보도자료에서 시작해, 다양한 뉴스로 시선을 확장하다.**
 
@@ -107,7 +106,6 @@ Python 의존성은 `requirements.txt`에서 관리해요. 웹페이지는 `web/
 
 ## ✨ 주요 기능
 
-<img width="3164" height="2070" alt="image" src="https://github.com/user-attachments/assets/22890b1a-7164-45ca-96df-8ed8e0494c48" />
 
 - **뉴스 목록 제공:** 기사 제목·이미지·요약문·언론사·발행일을 카드로 표시하고, 24건씩 페이지를 이동해요.
 - **뉴스 검색:** 검색어와 통계자료 필터를 이용하고, 자료 연결 근거가 있는 기사만 따로 볼 수 있어요.
