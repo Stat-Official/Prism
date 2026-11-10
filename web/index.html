@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Prism — 통계자료를 중심으로 여러 기사를 읽는 뉴스 포털.">
+  <title>Prism · 하나의 자료, 여러 시선</title>
+  <link rel="icon" href="assets/images/prism.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/styles.css?v=3.2">
+  <script src="assets/js/app.js?v=3.2" type="module"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 이동</a>
+  <header class="site-header">
+    <div class="masthead wrap">
+      <a class="brand" href="#/" aria-label="Prism 홈">
+        <img src="assets/images/prism.svg" alt="" width="29" height="29">
+        <span>Prism<span class="brand-period">.</span></span><span class="brand-channel">뉴스</span>
+      </a>
+      <form class="search-form" id="search-form" role="search">
+        <label class="sr-only" for="search">뉴스 검색</label>
+        <input id="search" name="q" placeholder="뉴스·통계 검색" autocomplete="off" maxlength="120">
+        <button type="submit" aria-label="검색">⌕</button>
+      </form>
+    </div>
+    <nav class="section-nav wrap" aria-label="뉴스 메뉴"><a href="#/">전체 뉴스</a></nav>
+  </header>
+  <main id="main" class="wrap" tabindex="-1"></main>
+  <footer class="site-footer wrap">
+    <a class="footer-brand" href="#/">Prism.</a>
+    <span>하나의 자료에서 시작하는, 더 넓은 뉴스.</span>
+    <div><a href="https://kosis.kr/" target="_blank" rel="noopener noreferrer">KOSIS ↗</a><button type="button" id="footer-info">서비스 안내</button></div>
+  </footer>
+  <dialog id="info-dialog" aria-labelledby="info-title">
+    <button type="button" class="dialog-close" id="info-close" aria-label="안내 닫기">×</button>
+    <h2 id="info-title">Prism</h2>
+    <p>기사 속 통계자료를 선택하고 관련된 주장과 상반된 주장을 비교하는 포털이에요. 수집한 기사 전체를 탐색하고, 자료 연결 근거가 있는 기사만 따로 볼 수도 있어요.</p>
+    <p>비교할 다른 기사가 있는 자료명을 누르면 같은 자료를 사용한 기사들의 주장이 표시돼요.</p>
+    <p>비교 화면에서는 양쪽 기사의 발췌문과 맥락을 살펴보고, 기사 원문과 통계자료도 확인할 수 있어요.</p>
+  </dialog>
+  <dialog id="comparison-dialog" class="comparison-dialog" aria-labelledby="comparison-title">
+    <button type="button" class="dialog-close" id="comparison-close" aria-label="비교 닫기">×</button>
+    <h2 id="comparison-title">주장 비교</h2>
+    <div id="comparison-content"></div>
+  </dialog>
+</body>
+</html>

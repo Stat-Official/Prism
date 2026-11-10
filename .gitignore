@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+.DS_Store
+.models/
+data/
+web/current.json
+web/snapshots/

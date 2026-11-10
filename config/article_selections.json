@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "reviewer": "assistant",
+  "userApproved": true,
+  "reviewedAt": "2026-11-03",
+  "verificationMethod": "indexed_source_text_review",
+  "comparisons": [
+    {
+      "id": "employment-quality-2019-08",
+      "question": "취업자 증가는 고용의 질 개선을 뜻할까요?",
+      "label": "고용의 질에 대한 해석 차이",
+      "reason": "같은 고용통계의 취업자 증가를 두고 고용의 질이 개선됐는지에 대한 평가가 달라요.",
+      "qualification": "두 글은 취업자 증가라는 공통 통계에서 출발하며, 고용의 질을 판단하는 기준과 정책 효과 평가가 달라요. 정부 정책주간지 기사와 개인 필자의 칼럼을 비교해요.",
+      "release": {
+        "title": "2019년 8월 고용동향",
+        "url": "https://mods.go.kr/board.es?act=view&bid=210&list_no=377478&mid=a10301030100&ref_bid=&tag=",
+        "publisher": "통계청",
+        "publishedAt": "2019-09-11",
+        "summary": "2019년 8월 취업자는 전년 동월보다 45만2000명 증가했어요. 두 글이 공통으로 다루는 수치예요."
+      },
+      "articleA": {
+        "title": "고용 양·질적 개선 ‘뚜렷’ 43건 과제 추진 ‘착착’",
+        "url": "https://gonggam.korea.kr/newsContentView.es?code_cd=0107030000&content=NC002&mid=a12700000000&news_id=EBC6D40143864203E0540021F662AC5F&section_id=NCCD_POLICY",
+        "publisher": "K-공감 · 정부 정책주간지",
+        "publishedAt": "2019-09-23",
+        "speaker": "K-공감 기사 서술",
+        "position": "고용의 양적·질적 개선으로 평가해요.",
+        "quote": "가장 눈에 띄는 변화는 고용의 양적·질적 개선이다.",
+        "sourceEvidence": "45만 2000명 증가했다.",
+        "sourceReview": "본문에서 통계청이 발표한 8월 고용동향을 명시하고, 2018년 같은 달보다 취업자가 45만2000명 늘었다는 수치를 사용해요.",
+        "verificationUrl": "https://gonggam.korea.kr/newsContentView.es?code_cd=&content=&mid=a12602000000&news_id=EBC6D40143864203E0540021F662AC5F&section_id=",
+        "summary": "취업자 증가와 고용지표 개선을 소득주도성장 정책의 성과로 평가하는 글이에요."
+      },
+      "articleB": {
+        "title": "[이병태의 경제 돌직구] 文 대통령 말대로면 경제학계 발칵 뒤집어질 것",
+        "url": "https://www.chosun.com/site/data/html_dir/2019/09/29/2019092901988.html",
+        "publisher": "조선일보 · 이병태 칼럼",
+        "publishedAt": "2019-09-30",
+        "speaker": "이병태 · 당시 KAIST 경영대학 교수",
+        "position": "고용의 질이 개선됐다는 평가를 비판해요.",
+        "quote": "노인들을 위해 만든 일자리는 경제학에서 말하는 일자리와는 거리가 멀다.",
+        "sourceEvidence": "45만2000개 늘어났다는 일자리",
+        "sourceReview": "본문의 전년 대비 취업자 증가 45만2000명과 60세 이상 증가 39만1000명은 공식 2019년 8월 고용동향과 일치해요. 필자는 이 자료를 근거로 고용의 질 개선이라는 평가를 반박해요.",
+        "verificationUrl": "https://www.chosun.com/site/data/html_dir/2019/09/29/2019092901988.html",
+        "summary": "증가한 취업자 중 고령층과 단기 일자리의 비중을 지적하며, 고용의 질이 좋아졌다는 정부 평가를 비판하는 칼럼이에요."
+      }
+    },
+    {
+      "id": "economic-recovery-2026-09",
+      "question": "9월 지표 반등은 지속적인 경기 회복으로 이어질까요?",
+      "label": "경기 회복의 지속성에 대한 해석 차이",
+      "reason": "같은 9월 산업활동 지표를 두고, 기사에 소개된 정부는 성장 흐름의 지속을 전망하고 칼럼 필자는 본격적인 내수 회복 판단에 신중해야 한다고 평가해요.",
+      "qualification": "두 글 모두 9월 생산·소비·투자의 반등을 인정해요. 기사에 소개된 정부의 성장 흐름 지속 전망과 칼럼 필자의 내수 회복 신중론을 비교해요. 일간경북신문 기사도 소비 부진과 회복 불확실성을 함께 언급해요.",
+      "release": {
+        "releaseId": "3bd28debc6dce7d59c4c",
+        "title": "2026년 9월 산업활동동향",
+        "url": "https://mods.go.kr/board.es?mid=a10301050100&act=view&bid=216&list_no=447747",
+        "publisher": "국가데이터처",
+        "publishedAt": "2026-10-30",
+        "summary": "2026년 9월 전산업생산은 전월보다 3.0%, 소매판매는 3.6%, 설비투자는 5.3% 증가했어요. 두 글이 공통으로 다루는 통계예요."
+      },
+      "articleA": {
+        "title": "산업생산·소비·투자 3개월 만에 ‘트리플 플러스’",
+        "url": "https://www.newgbnews.com/news/view.php?idx=410984",
+        "publisher": "일간경북신문",
+        "publishedAt": "2026-11-02",
+        "speaker": "재정경제부 · 김상태 기자가 전한 정부 전망",
+        "position": "정부는 추세적인 성장 흐름이 지속될 것으로 전망해요.",
+        "quote": "추세적인 성장 흐름이 지속될 것으로 전망했다.",
+        "sourceEvidence": "2026년 9월 산업활동동향",
+        "sourceReview": "본문에 2026년 9월 산업활동동향을 명시하고, 전산업생산 3.0%, 소매판매 3.6%, 설비투자 5.3%의 전월 대비 증가율을 사용해요. 발췌문은 기사에 소개된 재정경제부의 전망이에요.",
+        "verificationUrl": "https://www.newgbnews.com/news/view.php?idx=410984",
+        "summary": "9월 산업활동 지표를 소개하며 정부의 경기 회복 지속 전망을 전해요. 소비 부진과 향후 회복의 불확실성도 함께 설명하는 기사예요."
+      },
+      "articleB": {
+        "title": "[박근종 칼럼] 9월 ‘트리플 증가’의 착시, 반도체 쏠림 넘어 경제 펀더멘털 재건 서둘러야",
+        "url": "https://www.mhns.co.kr/news/articleView.html?idxno=766861",
+        "publisher": "더쎈뉴스 · 박근종 칼럼",
+        "publishedAt": "2026-10-31",
+        "speaker": "박근종 · 칼럼 필자",
+        "position": "기저효과 등 일시적 요인을 고려해 내수 회복 판단에 신중해야 한다고 평가해요.",
+        "quote": "본격적인 내수 회복으로 단정하기는 섣부르다.",
+        "sourceEvidence": "2026년 9월 산업활동동향",
+        "sourceReview": "본문에서 국가데이터처가 10월 30일 발표한 2026년 9월 산업활동동향을 명시해요. 생산 3.0%, 소비 3.6%, 투자 5.3%의 반등을 인정하고, 기저효과와 추석 특수 등 일시적 요인을 이유로 회복 평가에 신중해야 한다고 주장해요.",
+        "verificationUrl": "https://www.mhns.co.kr/news/articleView.html?idxno=766861",
+        "summary": "같은 9월 산업활동 통계의 반등을 인정하면서도 기저효과와 반도체 편중, 분기 소비 부진을 근거로 본격적인 내수 회복이라는 평가에 신중론을 제시하는 칼럼이에요."
+      }
+    }
+  ]
+}
