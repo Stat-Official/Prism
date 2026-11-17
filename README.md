@@ -141,7 +141,7 @@ Prism/
 │
 ├── data/                            # [생성] 로컬 수집·분석 자료, Git 제외
 │   ├── selected_sources/            # 비교 예시 기사 처리 결과
-│   └── news_<실행시각>/              # 수집 실행별 결과
+│   └── news_<실행시각>/               # 수집 실행별 결과
 │       ├── rss_titles.json          # RSS 제목 목록
 │       ├── rss_releases.json        # 자료 ID·원문 링크·발행일
 │       ├── articles.jsonl           # 중복을 정리한 기사 목록
