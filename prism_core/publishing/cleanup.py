@@ -13,7 +13,8 @@ def clean_snapshots(*, apply=False):
     """Keep the active snapshot and the last validated build of every collection."""
     with pipeline_lock():
         web = BASE / 'web'
-        manifest = json.loads((web / 'current.json').read_text(encoding='utf-8'))
+        manifest_path = web / 'current.json'
+        manifest = json.loads(manifest_path.read_text(encoding='utf-8')) if manifest_path.exists() else None
         retained = {}
 
         def retain(filename, collection_id):
@@ -29,7 +30,8 @@ def clean_snapshots(*, apply=False):
                 raise ValueError('A retained snapshot does not match its collection.')
             retained[filename] = collection_id
 
-        retain(manifest['data'], manifest['collectionId'])
+        if manifest is not None:
+            retain(manifest['data'], manifest['collectionId'])
         for folder in sorted((BASE / 'data').glob('news_*')):
             if not folder.is_dir():
                 continue

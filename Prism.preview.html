@@ -1,0 +1,1535 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Prism — 통계자료를 중심으로 여러 기사를 읽는 뉴스 포털.">
+  <title>Prism · 하나의 자료, 여러 시선</title>
+  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiByeD0iMTAiIGZpbGw9IiNmOGY3ZjMiLz48cGF0aCBkPSJNMjQgNSA0NCA0MUg0WiIgZmlsbD0iIzc3NjZjZiIgZmlsbC1vcGFjaXR5PSIuMiIgc3Ryb2tlPSIjNTQ0NzhjIiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJtMjQgNSA3IDM2SDQ0WiIgZmlsbD0iIzc3NjZjZiIgZmlsbC1vcGFjaXR5PSIuNSIvPjwvc3ZnPg0K?v=4.1" type="image/svg+xml">
+  <style>
+:root {
+  --ink:#1b2430;
+  --muted:#707987;
+  --line:#e4e8ee;
+  --accent:#315ae8;
+  --soft:#f5f7fa;
+  color-scheme:light;
+  font-family:Arial,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  color:var(--ink);
+  background:#fff;
+}
+* {
+  box-sizing:border-box;
+}
+body {
+  margin:0;
+}
+a {
+  color:inherit;
+  text-decoration:none;
+}
+button,input,select {
+  font:inherit;
+}
+button,select {
+  cursor:pointer;
+}
+button {
+  color:inherit;
+}
+img {
+  display:block;
+  max-width:100%;
+  object-fit:cover;
+}
+h1,h2,h3,p,figure {
+  margin:0;
+}
+button:disabled {
+  opacity:.45;
+  cursor:default;
+}
+:focus-visible {
+  outline:2px solid var(--accent);
+  outline-offset:4px;
+}
+.wrap {
+  width:min(1240px,calc(100% - 64px));
+  margin:auto;
+}
+.num {
+  font-family:Arial,Helvetica,sans-serif;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:0;
+}
+.sr-only {
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
+.skip-link {
+  position:fixed;
+  top:-100px;
+  left:16px;
+  padding:12px;
+  background:white;
+  z-index:100;
+}
+.skip-link:focus {
+  top:12px;
+}
+.site-header {
+  border-bottom:1px solid var(--line);
+}
+.masthead {
+  height:104px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+}
+.brand {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:38px;
+  font-weight:800;
+  letter-spacing:-1.7px;
+}
+.brand-period {
+  color:var(--accent);
+}
+.brand-channel {
+  font-size:16px;
+  font-weight:500;
+  letter-spacing:0;
+  border-left:1px solid #d3d8e0;
+  margin-left:8px;
+  padding-left:18px;
+  color:#5c6573;
+}
+.search-form {
+  display:flex;
+  border:1px solid #cdd4df;
+  border-radius:4px;
+  width:310px;
+  height:42px;
+}
+.search-form input {
+  border:0;
+  min-width:0;
+  flex:1;
+  padding:0 14px;
+  background:transparent;
+  font-size:14px;
+}
+.search-form button {
+  border:0;
+  background:none;
+  font-size:28px;
+  padding:0 13px;
+}
+.section-nav {
+  min-height:58px;
+  display:flex;
+  align-items:center;
+}
+.section-nav>a {
+  font-weight:700;
+  font-size:14px;
+}
+.home-heading {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  padding:32px 0 24px;
+}
+.home-heading h1 {
+  font-size:24px;
+  letter-spacing:-.8px;
+}
+.text-button {
+  border:1px solid var(--line);
+  border-radius:4px;
+  background:white;
+  padding:8px 12px;
+}
+.image-wrap {
+  aspect-ratio:5/3;
+  background:var(--soft);
+  overflow:hidden;
+}
+.image-wrap img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .2s;
+}
+.news-story>a:hover h2 {
+  color:var(--accent);
+}
+.news-story>a:hover img {
+  transform:scale(1.02);
+}
+.news-story h2 {
+  font-size:19px;
+  line-height:1.5;
+  letter-spacing:-.6px;
+  word-break:keep-all;
+  overflow-wrap:anywhere;
+}
+.lead-deck {
+  color:#687180;
+  line-height:1.7;
+  font-size:13px;
+  margin-top:10px;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.byline {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.5;
+  margin-top:13px;
+}
+.news-sources {
+  border-top:1px solid #edf0f4;
+  padding-top:10px;
+  margin-top:14px;
+  font-size:11px;
+  line-height:1.7;
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px 8px;
+}
+.news-sources span {
+  color:var(--muted);
+}
+.news-sources .rss-source {
+  color:#657493;
+}
+.rss-source[href]:hover {
+  text-decoration:underline;
+}
+.secondary-story {
+  padding-bottom:20px;
+  border-bottom:1px solid var(--line);
+}
+.secondary-story h2 {
+  font-size:20px;
+}
+.rail-story time {
+  font-size:11px;
+  color:var(--muted);
+}
+.section-heading h2 {
+  font-size:20px;
+}
+.news-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:32px 26px;
+}
+.news-card {
+  padding-bottom:20px;
+  border-bottom:1px solid var(--line);
+}
+.empty-search {
+  text-align:center;
+  padding:100px 24px;
+}
+.empty-search h1,.empty-search h2 {
+  font-size:22px;
+}
+.empty-search p {
+  margin-top:16px;
+  color:var(--muted);
+  line-height:1.7;
+}
+.empty-search .text-button {
+  display:inline-block;
+  margin-top:20px;
+}
+.article-topline {
+  display:flex;
+  gap:10px;
+  font-size:12px;
+  color:var(--muted);
+  padding:25px 0;
+}
+.reading-layout {
+  display:grid;
+  grid-template-columns:minmax(0,820px) minmax(280px,1fr);
+  gap:48px;
+  align-items:start;
+}
+.reading-column {
+  min-width:0;
+}
+.article-header {
+  padding:12px 0 26px;
+  border-bottom:1px solid var(--line);
+}
+.article-header h1 {
+  font-size:35px;
+  line-height:1.45;
+  letter-spacing:-1.2px;
+  word-break:keep-all;
+  overflow-wrap:anywhere;
+}
+.article-meta {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 16px;
+  font-size:12px;
+  color:var(--muted);
+  margin-top:22px;
+  line-height:1.6;
+}
+.source-name {
+  font-weight:700;
+  color:#3c4656;
+}
+.article-meta a {
+  color:#4d65a7;
+  margin-left:auto;
+}
+.article-visual {
+  margin:30px auto;
+  width:100%;
+  max-width:680px;
+}
+.article-visual img {
+  width:100%;
+  height:auto;
+}
+.article-body {
+  max-width:720px;
+  margin:0 auto;
+  padding:8px 0 36px;
+  font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  font-size:19px;
+  line-height:1.95;
+  letter-spacing:-.4px;
+  overflow-wrap:anywhere;
+}
+.article-body p {
+  margin:0 0 24px;
+}
+.body-unavailable {
+  padding:18px 0;
+}
+.body-unavailable h2 {
+  font-size:16px;
+  margin-bottom:18px;
+}
+.body-notice {
+  font-size:14px;
+  color:var(--muted);
+  padding-top:18px;
+  border-top:1px solid var(--line);
+}
+.related-panel {
+  position:sticky;
+  top:20px;
+  border-top:3px solid var(--accent);
+  padding-top:19px;
+  max-height:calc(100vh - 40px);
+  overflow:auto;
+  scrollbar-width:thin;
+  scroll-margin-top:20px;
+}
+.panel-heading {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+.panel-heading h2 {
+  font-size:20px;
+}
+.related-card {
+  border-top:1px solid var(--line);
+  padding:18px 0;
+}
+.related-card>a {
+  display:flow-root;
+}
+.related-card .image-wrap {
+  float:right;
+  width:80px;
+  height:65px;
+  margin:0 0 8px 12px;
+}
+.related-card .image-wrap img {
+  object-fit:contain;
+}
+.related-card h2 {
+  font-size:14px;
+  line-height:1.7;
+  letter-spacing:-.3px;
+}
+.related-card .lead-deck {
+  font-size:12px;
+  clear:both;
+  padding-top:8px;
+  margin-top:0;
+}
+.related-card .byline {
+  margin-top:9px;
+  font-size:10px;
+}
+.panel-empty {
+  font-size:13px;
+  line-height:1.8;
+  padding:24px 0;
+  color:var(--muted);
+}
+.mobile-panel-trigger,.sheet-backdrop {
+  display:none;
+}
+.site-footer {
+  border-top:1px solid var(--line);
+  margin-top:64px;
+  padding:28px 0 42px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  font-size:11px;
+  color:var(--muted);
+}
+.footer-brand {
+  font-size:23px;
+  font-weight:800;
+  letter-spacing:-1px;
+  color:var(--ink);
+}
+.site-footer>div {
+  display:flex;
+  gap:20px;
+  margin-left:auto;
+}
+.site-footer button {
+  border:0;
+  padding:0;
+  background:none;
+  color:inherit;
+  font-size:inherit;
+}
+dialog {
+  border:1px solid var(--line);
+  border-radius:8px;
+  width:min(520px,calc(100% - 32px));
+  padding:32px;
+  color:var(--ink);
+}
+dialog::backdrop {
+  background:#15203466;
+}
+dialog h2 {
+  margin-bottom:20px;
+}
+dialog p {
+  font-size:14px;
+  line-height:1.9;
+  margin-bottom:16px;
+  color:#5f6b7c;
+}
+.dialog-close {
+  position:absolute;
+  top:12px;
+  right:14px;
+  border:0;
+  background:none;
+  font-size:24px;
+}
+@media(max-width:1050px) {
+  .wrap {
+    width:calc(100% - 40px);
+  }
+  .reading-layout {
+    grid-template-columns:minmax(0,1fr) 280px;
+    gap:28px;
+  }
+  .article-header h1 {
+    font-size:30px;
+  }
+  .news-grid {
+    gap:26px 20px;
+  }
+}
+@media(max-width:760px) {
+  .wrap {
+    width:calc(100% - 32px);
+  }
+  .masthead {
+    height:82px;
+    gap:16px;
+  }
+  .brand {
+    font-size:32px;
+    gap:7px;
+  }
+  .brand img {
+    width:25px;
+    height:25px;
+  }
+  .brand-channel {
+    display:none;
+  }
+  .search-form {
+    width:180px;
+    height:38px;
+  }
+  .search-form input {
+    padding:0 10px;
+    font-size:12px;
+  }
+  .search-form button {
+    padding:0 9px;
+  }
+  .section-nav {
+    width:100%;
+    padding:0 16px;
+  }
+  .home-heading {
+    padding:24px 0 20px;
+  }
+  .home-heading h1 {
+    font-size:21px;
+  }
+  .home-actions button {
+    font-size:11px;
+    padding:7px;
+  }
+  .secondary-story .lead-deck {
+    -webkit-line-clamp:3;
+    font-size:12px;
+  }
+  .news-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:24px 16px;
+  }
+  .news-card h2 {
+    font-size:16px;
+  }
+  .news-card .lead-deck {
+    font-size:12px;
+  }
+  .news-sources {
+    font-size:10px;
+  }
+  .reading-layout {
+    display:block;
+  }
+  .article-topline {
+    padding:20px 0;
+  }
+  .article-header {
+    padding-top:4px;
+  }
+  .article-header h1 {
+    font-size:28px;
+    letter-spacing:-.8px;
+  }
+  .article-meta {
+    font-size:11px;
+    gap:8px 12px;
+    margin-top:18px;
+  }
+  .article-meta a {
+    margin-left:0;
+  }
+  .article-visual {
+    margin:24px 0;
+  }
+  .article-body {
+    font-size:18px;
+    line-height:1.95;
+    padding-bottom:24px;
+  }
+  .article-body p {
+    margin-bottom:24px;
+  }
+  .related-panel {
+    display:none;
+    position:fixed;
+    inset:auto 0 0;
+    max-height:83dvh;
+    background:white;
+    z-index:40;
+    padding:22px 20px max(22px,env(safe-area-inset-bottom));
+    border-radius:16px 16px 0 0;
+    border-top:0;
+    box-shadow:0 -10px 40px #13204122;
+  }
+  .sheet-open {
+    overflow:hidden;
+  }
+  .sheet-open .related-panel {
+    display:block;
+  }
+  .mobile-panel-trigger {
+    display:block;
+    position:fixed;
+    bottom:max(18px,env(safe-area-inset-bottom));
+    left:50%;
+    transform:translateX(-50%);
+    background:var(--accent);
+    color:white;
+    border:0;
+    border-radius:24px;
+    padding:13px 24px;
+    z-index:20;
+    box-shadow:0 3px 16px #315ae833;
+    font-size:13px;
+    white-space:nowrap;
+  }
+  .sheet-open .mobile-panel-trigger {
+    display:none;
+  }
+  .sheet-open .sheet-backdrop {
+    display:block;
+    position:fixed;
+    inset:0;
+    background:#14203966;
+    z-index:30;
+    border:0;
+    width:100%;
+    height:100%;
+  }
+  .site-footer {
+    margin-top:42px;
+    flex-wrap:wrap;
+    gap:14px;
+    padding-bottom:90px;
+  }
+  .site-footer>span {
+    font-size:10px;
+  }
+  .site-footer>div {
+    width:100%;
+    margin-left:0;
+    gap:18px;
+  }
+  .empty-search {
+    padding:70px 16px;
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  * {
+    transition:none!important;
+    scroll-behavior:auto!important;
+  }
+}
+.eyebrow {
+  color:var(--accent);
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:9px;
+}
+.home-description {
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.7;
+  margin-top:12px;
+}
+.collection-meta {
+  display:grid;
+  gap:7px;
+  color:var(--muted);
+  font-size:12px;
+  text-align:right;
+  white-space:nowrap;
+}
+.news-filters {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:12px;
+  padding:18px 0;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.news-filters select {
+  border:1px solid #cdd4df;
+  border-radius:4px;
+  padding:10px 30px 10px 12px;
+  background:#fff;
+  color:var(--ink);
+  font-size:13px;
+  max-width:420px;
+}
+.check-filter {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  color:#596577;
+  cursor:pointer;
+}
+.check-filter input {
+  accent-color:var(--accent);
+  width:15px;
+  height:15px;
+}
+.result-count {
+  color:var(--muted);
+  font-size:12px;
+  margin:20px 0;
+}
+.evidence-badge.supported {
+  color:#245c48;
+  background:#eaf4ef;
+}
+.pagination {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+  padding:40px 0 10px;
+  font-size:13px;
+}
+.pagination a,.pagination>span {
+  padding:9px 12px;
+  border:1px solid var(--line);
+  border-radius:4px;
+}
+.pagination a[aria-current="page"] {
+  background:var(--accent);
+  color:white;
+  border-color:var(--accent);
+}
+.pagination [aria-disabled="true"] {
+  color:#8c94a0;
+}
+.relation-tabs {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  margin-top:20px;
+  border-bottom:1px solid var(--line);
+}
+.relation-tabs button {
+  border:0;
+  border-bottom:3px solid transparent;
+  background:white;
+  min-height:46px;
+  padding:10px 5px;
+  font-size:13px;
+  font-weight:700;
+}
+.relation-tabs button[aria-selected="true"] {
+  border-bottom-color:var(--accent);
+  color:var(--accent);
+}
+.related-card h3 {
+  font-size:15px;
+  line-height:1.7;
+  letter-spacing:-.3px;
+  overflow-wrap:anywhere;
+}
+.related-card a:hover h3 {
+  color:var(--accent);
+}
+.compare-button {
+  margin-top:12px;
+  width:100%;
+  background:#f7f9ff;
+  color:#3156bf;
+  border:1px solid #dfe5f6;
+  border-radius:4px;
+  padding:10px;
+  font-size:12px;
+}
+.compare-button:hover {
+  background:#edf1ff;
+}
+.panel-empty h3 {
+  font-size:14px;
+  color:#4e5a6d;
+  margin-bottom:10px;
+}
+.panel-empty p {
+  font-size:12px;
+  line-height:1.8;
+}
+.comparison-dialog {
+  width:min(1080px,calc(100% - 40px));
+  max-height:90dvh;
+  padding:36px;
+}
+.comparison-columns {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+  margin-top:22px;
+}
+.comparison-columns article {
+  border:1px solid var(--line);
+  padding:24px;
+  border-radius:5px;
+  min-width:0;
+}
+.comparison-columns h3 {
+  font-size:18px;
+  line-height:1.6;
+  margin:8px 0 0;
+  overflow-wrap:anywhere;
+}
+.comparison-article-heading {
+  margin-bottom:16px;
+}
+.comparison-thumbnail {
+  width:100%;
+  height:180px;
+  margin-bottom:20px;
+  border:1px solid var(--line);
+  border-radius:4px;
+  overflow:hidden;
+  background:var(--soft);
+}
+.comparison-thumbnail img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+.comparison-excerpt {
+  margin:0 0 24px;
+}
+.comparison-excerpt figcaption {
+  font-size:12px;
+  font-weight:600;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+.comparison-columns blockquote {
+  margin:0;
+  padding:16px;
+  background:var(--soft);
+  font-size:16px;
+  line-height:1.9;
+  overflow-wrap:anywhere;
+}
+.comparison-columns .text-button {
+  display:inline-block;
+  font-size:12px;
+}
+.comparison-sources {
+  display:grid;
+  gap:10px;
+  margin-top:24px;
+  padding:20px;
+  background:var(--soft);
+  font-size:13px;
+  line-height:1.8;
+}
+.comparison-sources h3 {
+  font-size:12px;
+  color:var(--muted);
+}
+.news-card h2 {
+  margin-top:16px;
+}
+.statistic-source {
+  color:var(--accent);
+  font:inherit;
+  line-height:inherit;
+  overflow-wrap:anywhere;
+}
+button.statistic-source {
+  border:0;
+  background:transparent;
+  padding:0;
+  text-align:left;
+  text-decoration:underline;
+  text-decoration-style:dotted;
+  text-underline-offset:4px;
+}
+.statistic-source[href] {
+  text-decoration:underline;
+  text-decoration-style:dotted;
+  text-underline-offset:4px;
+}
+.statistic-source[aria-pressed="true"] {
+  color:#203fa4;
+  background:#eaf0ff;
+  border-radius:3px;
+}
+.statistic-source.unavailable {
+  color:#596577;
+}
+.article-statistics {
+  display:grid;
+  gap:10px;
+  margin-top:24px;
+  padding-top:20px;
+  border-top:1px solid var(--line);
+}
+.article-statistics>span {
+  color:var(--muted);
+  font-size:11px;
+}
+.article-statistics>div {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  font-size:13px;
+  line-height:1.7;
+}
+.article-statistics .statistic-source {
+  padding:8px 11px;
+  background:#f4f6fb;
+  border-radius:4px;
+}
+.article-statistics .statistic-source[aria-pressed="true"] {
+  background:#eaf0ff;
+}
+.inline-source {
+  display:inline;
+  vertical-align:baseline;
+}
+.inline-source>span[aria-hidden] {
+  font-size:.72em;
+}
+.panel-close {
+  display:block;
+  border:0;
+  background:none;
+  font-size:26px;
+  padding:0 4px;
+}
+.selected-source {
+  color:#4f607c;
+  background:#f5f7fc;
+  border-radius:4px;
+  margin-top:16px;
+  padding:12px;
+  font-size:13px;
+  line-height:1.8;
+  overflow-wrap:anywhere;
+}
+.comparison-context { color:var(--muted); font-size:13px; line-height:1.8; }
+.body-unavailable blockquote { margin:18px 0; padding:18px; background:var(--soft); }
+.unverified { color:var(--muted); }
+.news-card .lead-deck { margin:12px 0; font-size:13px; line-height:1.8; color:var(--muted); }
+.mobile-panel-trigger[hidden] {
+  display:none;
+}
+@media(max-width:760px) {
+  .home-heading {
+    align-items:flex-start;
+  }
+  .home-description {
+    font-size:12px;
+  }
+  .collection-meta {
+    font-size:10px;
+    white-space:normal;
+    min-width:90px;
+    line-height:1.6;
+  }
+  .news-filters {
+    gap:12px 8px;
+  }
+  .news-filters>label:first-child {
+    width:100%;
+  }
+  .news-filters select {
+    max-width:100%;
+    font-size:12px;
+  }
+  #release-filter {
+    width:100%;
+  }
+  .check-filter {
+    font-size:11px;
+  }
+  .comparison-dialog {
+    width:calc(100% - 24px);
+    padding:30px 18px 20px;
+  }
+  .comparison-columns {
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+  .comparison-columns article {
+    padding:18px;
+  }
+  .comparison-columns h3 {
+    font-size:17px;
+  }
+  .comparison-thumbnail {
+    height:160px;
+  }
+  .comparison-columns blockquote {
+    font-size:15px;
+  }
+}
+
+</style>
+  <style>
+/* Prism / Clear Editorial x Prismatic Light · Presentation-only layer */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+:root { --ink:#17243B;--muted:#60728d;--line:#e5ecf6;--accent:#315ae8;--soft:#f4f8ff;--ice:#f4f8ff;--cyan:#63d8f5;--violet:#b9acff;--lavender:#e8dfff;--font-display:'Space Grotesk','SUIT','Pretendard',sans-serif; font-family:'DM Sans','Pretendard','SUIT','Apple SD Gothic Neo','Malgun Gothic',sans-serif; }
+html { scroll-behavior:smooth; }
+body { background:#fff;color:var(--ink); }
+.wrap { width:min(1380px,calc(100% - 96px)); }
+.site-header { position:relative;z-index:5;background:#fff; border-bottom:1px solid var(--line); }
+.masthead { height:96px; }
+.brand { font-family:var(--font-display); font-size:43px;letter-spacing:-2.8px;font-weight:700;gap:12px; }
+.brand img { width:36px;height:36px; }
+.brand-channel { font:600 10px/1.2 var(--font-display);letter-spacing:2px;margin-left:12px;padding-left:20px;color:#74839d; }
+.search-form { width:min(370px,38vw);height:46px;border-radius:99px;background:var(--ice);border-color:var(--line);transition:box-shadow .25s,border-color .25s; }
+.search-form:focus-within { box-shadow:0 0 0 4px #315ae819;border-color:var(--accent); }
+.search-form input { padding-left:19px;font-size:13px;outline:none; }
+.search-form button { color:var(--accent);padding:0 18px; }
+.section-nav { height:50px;min-height:50px;justify-content:space-between;border-top:1px solid var(--line);font:600 10px var(--font-display);letter-spacing:1.4px;color:#61738d; }
+.section-nav>a { font:700 11px var(--font-display);letter-spacing:1.3px;color:var(--accent); }
+.section-nav>span:nth-child(2) { margin-left:auto;margin-right:5vw; }
+.editorial-hero { display:grid;grid-template-columns:55% 45%;min-height:510px;overflow:hidden;background:#f4f8ff;border:1px solid #e9eeff;margin-top:28px; }
+.hero-copy { position:relative;z-index:1;display:flex; flex-direction:column;justify-content:space-between;padding:30px clamp(24px,4vw,68px) 36px; }
+.hero-topline { display:flex;justify-content:space-between;gap:12px;max-width:640px;font:700 9px var(--font-display);letter-spacing:1.3px;color:#647ba1; }
+.hero-kicker { margin-top:auto;margin-bottom:19px;font:700 11px var(--font-display);letter-spacing:2.8px;color:#315ae8; }
+.hero-title { font:700 clamp(48px,5.2vw,90px)/.96 var(--font-display);letter-spacing:-.085em;color:#17243b;white-space:nowrap;margin-bottom:auto; }
+.hero-title em { font-weight:500;font-style:italic;color:#315ae8;letter-spacing:-.09em; }
+.hero-dot { color:#63d8f5; }
+.hero-bottom { display:flex;gap:24px;align-items:end;justify-content:space-between;margin-top:32px; }
+.hero-bottom p { font-size:14px;line-height:1.65;color:#546682; }
+.hero-bottom>span { color:#315ae8;white-space:nowrap;font:700 10px var(--font-display);letter-spacing:1.2px; }
+.hero-bottom>span span { font-size:25px;vertical-align:middle;margin-left:8px; }
+.hero-art { overflow:hidden;isolation:isolate;position:relative;background:radial-gradient(ellipse at 48% 56%,#fff 0 4%,#f4f8ff 26%,#dcecff 69%,#baccff 110%); }
+.hero-art:before { content:'';position:absolute;inset:-25%;background:radial-gradient(ellipse at 60% 35%,#8de8ffad,transparent 30%),radial-gradient(ellipse at 40% 65%,#b9acffbb,transparent 42%),radial-gradient(ellipse at 87% 78%,#315ae844,transparent 37%);filter:blur(12px); }
+.glass-orbit { position:absolute;border:1px solid #ffffffbb;box-shadow: inset 5px 6px 15px #ffffffad,inset -6px -8px 25px #557cf033,0 10px 50px #5277b025;transform:rotate(-33deg);border-radius:50%; }
+.orbit-one { width:490px;height:260px;left:7%;top:19%; }
+.orbit-two { width:400px;height:175px;left:16%;top:42%;transform:rotate(43deg);border-color:#69daff99; }
+.glass-ribbon {position:absolute;display:block;width:135px;height:630px;top:-60px;border-radius:80px;backdrop-filter:blur(7px);background:linear-gradient(100deg,#ffffff44 0%,#b8d9ffba 18%,#ffffffbd 37%,#9ad8ff80 50%,#b9acff80 67%,#ffffffb8 87%,#79ccff55 100%);border-left:2px solid #ffffffdd;border-right:2px solid #577eff66;box-shadow:12px 15px 60px #6a7aff44,inset 6px 0 15px #ffffffbb; }
+.ribbon-one { left:43%;transform:rotate(36deg); }
+.ribbon-two { left:55%;transform:rotate(-28deg);width:108px;opacity:.8; }
+.hero-art-label,.hero-art-number { position:absolute;bottom:30px;font:700 10px var(--font-display);letter-spacing:1.7px;color:#254ac4; }
+.hero-art-label { left:30px; }.hero-art-number { right:26px; }
+.home-heading {padding:74px 0 25px;align-items:end; }
+.home-heading h2 {font:700 clamp(30px,3.4vw,52px)/1.12 var(--font-display);letter-spacing:-2px;}
+.eyebrow { font:700 10px var(--font-display);letter-spacing:2px;margin-bottom:16px; }
+.home-description {font-size:14px;margin-top:16px; }
+.collection-meta {font:500 11px var(--font-display);color:#7083a2;letter-spacing:.4px; }
+.news-filters {background:#f8faff;padding:20px 22px;border:1px solid var(--line);gap:14px; }
+.news-filters select {border:1px solid #dce5f4;border-radius:0;padding:11px 32px 11px 14px;background:white;font-size:12px; }
+.check-filter {font-size:12px;gap:9px;color:#415773; }
+.check-filter input {accent-color:#315ae8; }
+.result-count {margin:27px 0 21px;font:600 11px var(--font-display);letter-spacing:1.1px;color:#6f81a0; }
+.news-grid {display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:34px 24px;align-items:start; }
+.news-card {grid-column:span 4;min-width:0;border-bottom:1px solid var(--line);padding-bottom:25px;position:relative; }
+.news-card:nth-child(1) {grid-column:span 7;grid-row:span 2;}
+.news-card:nth-child(2),.news-card:nth-child(3) {grid-column:span 5; }
+.news-card:nth-child(1) .image-wrap {aspect-ratio:1.55;}
+.news-card:nth-child(2) .image-wrap,.news-card:nth-child(3) .image-wrap { aspect-ratio:2.1; }
+.news-card:nth-child(6n + 4) {grid-column:span 5;}
+.news-card:nth-child(6n + 5) {grid-column:span 3;}
+.news-card:nth-child(6n + 6) {grid-column:span 4;}
+.news-card .image-wrap {aspect-ratio:1.6;background:#e8effa;position:relative; }
+.news-card .image-wrap:after {content:'↗';position:absolute;right:14px;bottom:14px;width:35px;height:35px;display:grid;place-items:center;background:white;color:#315ae8;font-size:19px;opacity:0;transform:translateY(7px);transition:opacity .3s,transform .3s;}
+.news-card>a:hover .image-wrap:after,.news-card>a:focus-visible .image-wrap:after {opacity:1;transform:none;}
+.news-card .image-wrap img {transition:transform .6s cubic-bezier(.2,.7,.2,1);}
+.news-card>a:hover img { transform:scale(1.055); }
+.news-card h2 {margin-top:18px;font-size:clamp(17px,1.65vw,25px);line-height:1.43;letter-spacing:-.65px;font-weight:700;}
+.news-card:nth-child(1) h2 {font-size:clamp(26px,2.5vw,39px);line-height:1.3;letter-spacing:-1.5px;}
+.news-card .lead-deck {font-size:13px;line-height:1.75;margin-top:12px;color:#61718b;}
+.news-card .byline {font:600 10px var(--font-display);letter-spacing:.2px;color:#71829b;margin-top:15px;}
+.news-card .news-sources {font-size:11px;border-color:#e5ecf6;}
+.article-topline {padding:37px 0 24px;font:700 10px var(--font-display);letter-spacing:1.2px;text-transform:uppercase;color:#7b8baa;}
+.reading-layout {grid-template-columns:minmax(0,1.8fr) minmax(295px,.8fr);gap:clamp(28px,4vw,72px);}
+.article-header {padding:14px 0 32px;border-bottom:1px solid var(--line);}
+.article-header:before {content:'PRISM / ARTICLE';display:block;margin-bottom:26px;font:700 10px var(--font-display);letter-spacing:2.2px;color:var(--accent);}
+.article-header h1 {font-size:clamp(34px,3.8vw,62px);line-height:1.24;letter-spacing:-2.2px;}
+.article-meta {font-size:12px;margin-top:27px;}
+.article-visual {max-width:none;margin:30px auto;}
+.article-visual img {max-height:580px;object-fit:contain;background:#f4f8ff;}
+.article-body {max-width:740px;font-size:18px;line-height:2.05;}
+.article-statistics {margin-top:30px;background:#f4f8ff;border:1px solid #e5ecf6;padding:22px;}
+.related-panel {border-top:3px solid #315ae8;top:26px;background:#fff;padding:25px 4px 0;}
+.panel-heading h2 {font:700 23px var(--font-display);letter-spacing:-.9px;}
+.selected-source {font-size:15px;line-height:1.7;}
+.relation-tabs button {font-size:12px;transition:background .2s;}
+.relation-tabs button:hover {background:#f4f8ff;}
+.compare-button {background:#edf2ff;border-color:#dce5ff;color:#274cc8;border-radius:0;font-weight:700;transition:background .2s,transform .2s;}
+.compare-button:hover {background:#dae5ff;transform:translateY(-2px);}
+.comparison-dialog {border:1px solid #dce5fc;border-radius:0;box-shadow:0 26px 90px #17243b2b;padding:clamp(18px,4vw,45px);}
+.comparison-dialog>h2 {font:700 clamp(26px,3vw,42px) var(--font-display);letter-spacing:-1.5px;border-bottom:1px solid #e5ecf6;padding-bottom:21px;}
+.comparison-context {line-height:1.8;}
+.comparison-columns {gap:18px;}
+.comparison-columns article {border-radius:0;border:1px solid #dbe5f7;border-top:5px solid #315ae8;background:#f8faff;padding:clamp(17px,2.3vw,30px);}
+.comparison-columns article:nth-child(2) {background:#fcfaff;border-top-color:#a58bec;border-color:#e8dfff;}
+.comparison-columns blockquote {background:white;border-left:3px solid #315ae8;padding:18px;}
+.comparison-columns article:nth-child(2) blockquote {border-left-color:#a58bec;}
+.comparison-sources {background:linear-gradient(90deg,#edf3ff,#f7f4ff);border:1px solid #e5ecf6;padding:24px;}
+.pagination a,.pagination>span {border-radius:0;}
+.site-footer {margin-top:100px;padding-top:36px;padding-bottom:64px;}
+.footer-brand {font:700 35px var(--font-display);letter-spacing:-2px;}
+.text-button {border-radius:0;}
+@media(max-width:1100px){.wrap{width:calc(100% - 52px)}.hero-title{font-size:clamp(42px,5.3vw,68px)}.editorial-hero{min-height:435px}.news-card:nth-child(n){grid-column:span 6;grid-row:auto}.news-card:nth-child(1){grid-column:span 12}.news-card:nth-child(1) .image-wrap{aspect-ratio:2.1}}
+@media(max-width:760px){.wrap{width:calc(100% - 32px)}.masthead{height:78px}.brand{font-size:33px}.brand img{width:27px;height:27px}.brand-channel,.section-nav>span{display:none}.section-nav{height:40px;min-height:40px}.search-form{width:155px;height:40px}.editorial-hero{grid-template-columns:1fr;min-height:0;margin-top:16px}.hero-copy{min-height:330px;padding:22px 24px}.hero-topline span:last-child{display:none}.hero-kicker{margin-bottom:14px}.hero-title{font-size:clamp(39px,10vw,65px);letter-spacing:-.075em}.hero-bottom{margin-top:22px}.hero-bottom p{font-size:12px}.hero-bottom>span{font-size:8px}.hero-art{height:205px}.glass-ribbon{height:450px;top:-95px}.hero-art-label,.hero-art-number{bottom:18px}.home-heading{padding:45px 0 22px;display:block}.home-heading h2{font-size:34px}.collection-meta{text-align:left;margin-top:20px;display:flex;gap:18px}.news-filters{padding:15px;gap:11px}.news-filters label:has(select){flex:1 1 180px}.news-filters select{width:100%;max-width:none}.news-card:nth-child(n){grid-column:span 12}.news-card:nth-child(1) .image-wrap{aspect-ratio:1.45}.news-card:nth-child(1) h2{font-size:26px}.news-card .image-wrap{aspect-ratio:1.7}.news-grid{gap:31px}.article-header h1{font-size:34px;letter-spacing:-1.3px}.article-body{font-size:17px}.related-panel{position:fixed;top:auto;border:0;border-radius:18px 18px 0 0;padding:22px 18px max(22px,env(safe-area-inset-bottom))}.comparison-columns{grid-template-columns:1fr}.comparison-dialog{max-height:92dvh}.site-footer{margin-top:60px}}
+@media(max-width:390px){.hero-title{font-size:36px}.brand{font-size:29px}.search-form{width:145px}.hero-bottom>span{display:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.news-card .image-wrap:after,.news-card .image-wrap img,.compare-button{transition:none!important}}
+
+/* Footer / one-line 3-zone identity: brand, centered maker, useful links. */
+.site-footer.wrap {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) max-content minmax(0,1fr);
+  align-items: center;
+  column-gap: clamp(14px,2vw,30px);
+  border-top: 1px solid var(--line);
+  margin-top: 100px;
+  padding-top: 36px;
+  padding-bottom: 64px;
+  color: #61728A;
+}
+.site-footer .footer-identity,
+.site-footer .footer-credit,
+.site-footer .footer-links { display:flex;align-items:center;flex-wrap:nowrap;white-space:nowrap;min-width:0;margin-left:0;width:auto; }
+.site-footer .footer-identity { gap:17px;justify-self:start; }
+.site-footer .footer-brand { font:700 32px/1 var(--font-display); letter-spacing:-1.9px;color:#17243B; }
+.site-footer .footer-brand-period { color:#315AE8; }
+.site-footer .footer-tagline {font:500 9px/1.3 var(--font-display);letter-spacing:.08px;color:#61728A;}
+.site-footer .footer-credit { gap:8px;justify-self:center;font-size:11px;letter-spacing:-.1px; }
+.site-footer .footer-team {color:#315AE8;font-weight:700;text-decoration:none;transition:color .2s ease;}
+.site-footer .footer-team:hover {color:#17243B;}
+.site-footer .footer-links {gap:22px;justify-self:end;margin:0;width:auto;font-size:11px;}
+.site-footer .footer-links a {color:inherit;text-decoration:none;}
+.site-footer .footer-links a:hover,.site-footer .footer-links button:hover {color:#315AE8;}
+.site-footer .footer-links button {cursor:pointer;}
+.site-footer a:focus-visible,.site-footer button:focus-visible {outline:2px solid #315AE8;outline-offset:5px;border-radius:2px;}
+@media (max-width: 1080px) {
+  .site-footer.wrap {grid-template-columns:1fr auto;row-gap:20px;}
+  .site-footer .footer-identity {grid-column:1;}
+  .site-footer .footer-links {grid-column:2;grid-row:1;}
+  .site-footer .footer-credit {grid-column:1 / -1;justify-self:center;}
+}
+@media (max-width: 760px) {
+  .site-footer.wrap {grid-template-columns:1fr;gap:18px;padding-bottom:45px;margin-top:60px;}
+  .site-footer .footer-identity,.site-footer .footer-credit,.site-footer .footer-links {grid-column:1;grid-row:auto;justify-self:start;width:auto;margin:0;}
+  .site-footer .footer-brand {font-size:29px;}
+  .site-footer .footer-tagline {font-size:8px;}
+  .site-footer .footer-credit {font-size:10px;}
+  .site-footer .footer-links {gap:19px;}
+}
+@media (max-width: 390px) {
+  .site-footer .footer-identity {gap:10px;}
+  .site-footer .footer-tagline {font-size:7px;}
+  .site-footer .footer-credit {gap:5px;font-size:9px;}
+}
+
+/* Align the lower newsroom divider with the same centered content width as the upper divider. */
+.site-header { border-bottom: 0; }
+.section-nav.wrap { border-bottom: 1px solid var(--line); }
+
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 이동</a>
+  <header class="site-header">
+    <div class="masthead wrap">
+      <a class="brand" href="#/" aria-label="Prism 홈">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiByeD0iMTAiIGZpbGw9IiNmOGY3ZjMiLz48cGF0aCBkPSJNMjQgNSA0NCA0MUg0WiIgZmlsbD0iIzc3NjZjZiIgZmlsbC1vcGFjaXR5PSIuMiIgc3Ryb2tlPSIjNTQ0NzhjIiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJtMjQgNSA3IDM2SDQ0WiIgZmlsbD0iIzc3NjZjZiIgZmlsbC1vcGFjaXR5PSIuNSIvPjwvc3ZnPg0K" alt="" width="29" height="29">
+        <span>Prism<span class="brand-period">.</span></span><span class="brand-channel">THE DATA NEWSROOM</span>
+      </a>
+      <form class="search-form" id="search-form" role="search">
+        <label class="sr-only" for="search">뉴스 검색</label>
+        <input id="search" name="q" placeholder="뉴스·통계 검색" autocomplete="off" maxlength="120">
+        <button type="submit" aria-label="검색">⌕</button>
+      </form>
+    </div>
+    <nav class="section-nav wrap" aria-label="뉴스 메뉴"><a href="#/">01 / NEWSROOM</a><span>ONE DATA. MULTIPLE PERSPECTIVES.</span><span class="nav-edition">PRISM / 2026</span></nav>
+  </header>
+  <main id="main" class="wrap" tabindex="-1"></main>
+  <footer class="site-footer wrap footer-one-line" aria-label="Prism 사이트 정보">
+    <div class="footer-identity">
+      <a class="footer-brand" href="https://github.com/Stat-Official/Prism" target="_blank" rel="noopener noreferrer" aria-label="Prism 프로젝트 GitHub 저장소 (새 창)">Prism<span class="footer-brand-period">.</span></a>
+      <span class="footer-tagline">ONE DATA. MULTIPLE PERSPECTIVES.</span>
+    </div>
+    <div class="footer-credit">
+      <span>Created by 국가데이터처 청년인턴 1팀</span>
+      <a class="footer-team" href="https://github.com/Stat-Official" target="_blank" rel="noopener noreferrer" aria-label="STAT-OFFICIAL GitHub 조직 (새 창)">STAT-OFFICIAL <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="footer-links"><a href="https://kosis.kr/" target="_blank" rel="noopener noreferrer">KOSIS ↗</a><button type="button" id="footer-info">서비스 안내</button></div>
+  </footer>
+  <dialog id="info-dialog" aria-labelledby="info-title">
+    <button type="button" class="dialog-close" id="info-close" aria-label="안내 닫기">×</button>
+    <h2 id="info-title">Prism</h2>
+    <p>기사 속 통계자료를 선택하고 관련된 주장과 상반된 주장을 비교하는 포털이에요. 수집한 기사 전체를 탐색하고, 자료 연결 근거가 있는 기사만 따로 볼 수도 있어요.</p>
+    <p>비교할 다른 기사가 있는 자료명을 누르면 같은 자료를 사용한 기사들의 주장이 표시돼요.</p>
+    <p>비교 화면에서는 양쪽 기사의 발췌문과 맥락을 살펴보고, 기사 원문과 통계자료도 확인할 수 있어요.</p>
+  </dialog>
+  <dialog id="comparison-dialog" class="comparison-dialog" aria-labelledby="comparison-title">
+    <button type="button" class="dialog-close" id="comparison-close" aria-label="비교 닫기">×</button>
+    <h2 id="comparison-title">주장 비교</h2>
+    <div id="comparison-content"></div>
+  </dialog>
+<script id="prism-data" type="application/json">{"schemaVersion":2,"meta":{"collectionId":"selected-comparison-demo","mode":"curated_demo","collectedAt":null,"reviewedAt":"2026-11-03","analysis":null},"articles":[{"id":"6771042e3cc2d672948c","title":"고용 양·질적 개선 ‘뚜렷’ 43건 과제 추진 ‘착착’","url":"https://gonggam.korea.kr/newsContentView.es?code_cd=0107030000&content=NC002&mid=a12700000000&news_id=EBC6D40143864203E0540021F662AC5F&section_id=NCCD_POLICY","publisher":"K-공감 · 정부 정책주간지","providedAt":"2019-09-23","summary":"취업자 증가와 고용지표 개선을 소득주도성장 정책의 성과로 평가하는 글이에요.","body":"가장 눈에 띄는 변화는 고용의 양적·질적 개선이다.","bodyStatus":"selected_excerpt","imageUrl":"","speaker":"K-공감 기사 서술","selectionId":"employment-quality-2019-08","selectedExcerpt":true,"matchedReleaseIds":["03fccc8ba9b234cc7382"],"rssTitles":["2019년 8월 고용동향"],"releaseIds":["03fccc8ba9b234cc7382"],"candidateReleaseIds":[],"sourceMatchStatus":"supported","queries":[],"queryRanks":{},"duplicateOf":null,"sourceMatches":[{"releaseId":"03fccc8ba9b234cc7382","status":"supported","basis":"assistant_selection","reason":"본문에서 통계청이 발표한 8월 고용동향을 명시하고, 2018년 같은 달보다 취업자가 45만2000명 늘었다는 수치를 사용해요.","evidence":["45만 2000명 증가했다."]}],"claims":[{"text":"가장 눈에 띄는 변화는 고용의 양적·질적 개선이다.","kind":"selected_excerpt","speaker":"K-공감 기사 서술"}],"relations":{"related":[],"opposed":[{"articleId":"fd888bfcb213a56830fe","releaseIds":["03fccc8ba9b234cc7382"],"basis":"assistant_selection","score":2.0,"nliCompared":false,"selectionId":"employment-quality-2019-08","oppositionLabel":"고용의 질에 대한 해석 차이","reason":"같은 고용통계의 취업자 증가를 두고 고용의 질이 개선됐는지에 대한 평가가 달라요.","qualification":"두 글은 취업자 증가라는 공통 통계에서 출발하며, 고용의 질을 판단하는 기준과 정책 효과 평가가 달라요. 정부 정책주간지 기사와 개인 필자의 칼럼을 비교해요.","currentPosition":"고용의 양적·질적 개선으로 평가해요.","otherPosition":"고용의 질이 개선됐다는 평가를 비판해요.","currentEvidence":"가장 눈에 띄는 변화는 고용의 양적·질적 개선이다.","otherEvidence":"노인들을 위해 만든 일자리는 경제학에서 말하는 일자리와는 거리가 멀다."}]}},{"id":"fd888bfcb213a56830fe","title":"[이병태의 경제 돌직구] 文 대통령 말대로면 경제학계 발칵 뒤집어질 것","url":"https://www.chosun.com/site/data/html_dir/2019/09/29/2019092901988.html","publisher":"조선일보 · 이병태 칼럼","providedAt":"2019-09-30","summary":"증가한 취업자 중 고령층과 단기 일자리의 비중을 지적하며, 고용의 질이 좋아졌다는 정부 평가를 비판하는 칼럼이에요.","body":"노인들을 위해 만든 일자리는 경제학에서 말하는 일자리와는 거리가 멀다.","bodyStatus":"selected_excerpt","imageUrl":"","speaker":"이병태 · 당시 KAIST 경영대학 교수","selectionId":"employment-quality-2019-08","selectedExcerpt":true,"matchedReleaseIds":["03fccc8ba9b234cc7382"],"rssTitles":["2019년 8월 고용동향"],"releaseIds":["03fccc8ba9b234cc7382"],"candidateReleaseIds":[],"sourceMatchStatus":"supported","queries":[],"queryRanks":{},"duplicateOf":null,"sourceMatches":[{"releaseId":"03fccc8ba9b234cc7382","status":"supported","basis":"assistant_selection","reason":"본문의 전년 대비 취업자 증가 45만2000명과 60세 이상 증가 39만1000명은 공식 2019년 8월 고용동향과 일치해요. 필자는 이 자료를 근거로 고용의 질 개선이라는 평가를 반박해요.","evidence":["45만2000개 늘어났다는 일자리"]}],"claims":[{"text":"노인들을 위해 만든 일자리는 경제학에서 말하는 일자리와는 거리가 멀다.","kind":"selected_excerpt","speaker":"이병태 · 당시 KAIST 경영대학 교수"}],"relations":{"related":[],"opposed":[{"articleId":"6771042e3cc2d672948c","releaseIds":["03fccc8ba9b234cc7382"],"basis":"assistant_selection","score":2.0,"nliCompared":false,"selectionId":"employment-quality-2019-08","oppositionLabel":"고용의 질에 대한 해석 차이","reason":"같은 고용통계의 취업자 증가를 두고 고용의 질이 개선됐는지에 대한 평가가 달라요.","qualification":"두 글은 취업자 증가라는 공통 통계에서 출발하며, 고용의 질을 판단하는 기준과 정책 효과 평가가 달라요. 정부 정책주간지 기사와 개인 필자의 칼럼을 비교해요.","currentPosition":"고용의 질이 개선됐다는 평가를 비판해요.","otherPosition":"고용의 양적·질적 개선으로 평가해요.","currentEvidence":"노인들을 위해 만든 일자리는 경제학에서 말하는 일자리와는 거리가 멀다.","otherEvidence":"가장 눈에 띄는 변화는 고용의 양적·질적 개선이다."}]}},{"id":"8981c08c42162c918593","title":"산업생산·소비·투자 3개월 만에 ‘트리플 플러스’","url":"https://www.newgbnews.com/news/view.php?idx=410984","publisher":"일간경북신문","providedAt":"2026-11-02","summary":"9월 산업활동 지표를 소개하며 정부의 경기 회복 지속 전망을 전해요. 소비 부진과 향후 회복의 불확실성도 함께 설명하는 기사예요.","body":"추세적인 성장 흐름이 지속될 것으로 전망했다.","bodyStatus":"selected_excerpt","imageUrl":"","speaker":"재정경제부 · 김상태 기자가 전한 정부 전망","selectionId":"economic-recovery-2026-09","selectedExcerpt":true,"matchedReleaseIds":["3bd28debc6dce7d59c4c"],"rssTitles":["2026년 9월 산업활동동향"],"releaseIds":["3bd28debc6dce7d59c4c"],"candidateReleaseIds":[],"sourceMatchStatus":"supported","queries":[],"queryRanks":{},"duplicateOf":null,"sourceMatches":[{"releaseId":"3bd28debc6dce7d59c4c","status":"supported","basis":"assistant_selection","reason":"본문에 2026년 9월 산업활동동향을 명시하고, 전산업생산 3.0%, 소매판매 3.6%, 설비투자 5.3%의 전월 대비 증가율을 사용해요. 발췌문은 기사에 소개된 재정경제부의 전망이에요.","evidence":["2026년 9월 산업활동동향"]}],"claims":[{"text":"추세적인 성장 흐름이 지속될 것으로 전망했다.","kind":"selected_excerpt","speaker":"재정경제부 · 김상태 기자가 전한 정부 전망"}],"relations":{"related":[],"opposed":[{"articleId":"d92b39ab85874ead9691","releaseIds":["3bd28debc6dce7d59c4c"],"basis":"assistant_selection","score":2.0,"nliCompared":false,"selectionId":"economic-recovery-2026-09","oppositionLabel":"경기 회복의 지속성에 대한 해석 차이","reason":"같은 9월 산업활동 지표를 두고, 기사에 소개된 정부는 성장 흐름의 지속을 전망하고 칼럼 필자는 본격적인 내수 회복 판단에 신중해야 한다고 평가해요.","qualification":"두 글 모두 9월 생산·소비·투자의 반등을 인정해요. 기사에 소개된 정부의 성장 흐름 지속 전망과 칼럼 필자의 내수 회복 신중론을 비교해요. 일간경북신문 기사도 소비 부진과 회복 불확실성을 함께 언급해요.","currentPosition":"정부는 추세적인 성장 흐름이 지속될 것으로 전망해요.","otherPosition":"기저효과 등 일시적 요인을 고려해 내수 회복 판단에 신중해야 한다고 평가해요.","currentEvidence":"추세적인 성장 흐름이 지속될 것으로 전망했다.","otherEvidence":"본격적인 내수 회복으로 단정하기는 섣부르다."}]}},{"id":"d92b39ab85874ead9691","title":"[박근종 칼럼] 9월 ‘트리플 증가’의 착시, 반도체 쏠림 넘어 경제 펀더멘털 재건 서둘러야","url":"https://www.mhns.co.kr/news/articleView.html?idxno=766861","publisher":"더쎈뉴스 · 박근종 칼럼","providedAt":"2026-10-31","summary":"같은 9월 산업활동 통계의 반등을 인정하면서도 기저효과와 반도체 편중, 분기 소비 부진을 근거로 본격적인 내수 회복이라는 평가에 신중론을 제시하는 칼럼이에요.","body":"본격적인 내수 회복으로 단정하기는 섣부르다.","bodyStatus":"selected_excerpt","imageUrl":"","speaker":"박근종 · 칼럼 필자","selectionId":"economic-recovery-2026-09","selectedExcerpt":true,"matchedReleaseIds":["3bd28debc6dce7d59c4c"],"rssTitles":["2026년 9월 산업활동동향"],"releaseIds":["3bd28debc6dce7d59c4c"],"candidateReleaseIds":[],"sourceMatchStatus":"supported","queries":[],"queryRanks":{},"duplicateOf":null,"sourceMatches":[{"releaseId":"3bd28debc6dce7d59c4c","status":"supported","basis":"assistant_selection","reason":"본문에서 국가데이터처가 10월 30일 발표한 2026년 9월 산업활동동향을 명시해요. 생산 3.0%, 소비 3.6%, 투자 5.3%의 반등을 인정하고, 기저효과와 추석 특수 등 일시적 요인을 이유로 회복 평가에 신중해야 한다고 주장해요.","evidence":["2026년 9월 산업활동동향"]}],"claims":[{"text":"본격적인 내수 회복으로 단정하기는 섣부르다.","kind":"selected_excerpt","speaker":"박근종 · 칼럼 필자"}],"relations":{"related":[],"opposed":[{"articleId":"8981c08c42162c918593","releaseIds":["3bd28debc6dce7d59c4c"],"basis":"assistant_selection","score":2.0,"nliCompared":false,"selectionId":"economic-recovery-2026-09","oppositionLabel":"경기 회복의 지속성에 대한 해석 차이","reason":"같은 9월 산업활동 지표를 두고, 기사에 소개된 정부는 성장 흐름의 지속을 전망하고 칼럼 필자는 본격적인 내수 회복 판단에 신중해야 한다고 평가해요.","qualification":"두 글 모두 9월 생산·소비·투자의 반등을 인정해요. 기사에 소개된 정부의 성장 흐름 지속 전망과 칼럼 필자의 내수 회복 신중론을 비교해요. 일간경북신문 기사도 소비 부진과 회복 불확실성을 함께 언급해요.","currentPosition":"기저효과 등 일시적 요인을 고려해 내수 회복 판단에 신중해야 한다고 평가해요.","otherPosition":"정부는 추세적인 성장 흐름이 지속될 것으로 전망해요.","currentEvidence":"본격적인 내수 회복으로 단정하기는 섣부르다.","otherEvidence":"추세적인 성장 흐름이 지속될 것으로 전망했다."}]}}],"releases":[{"release_id":"03fccc8ba9b234cc7382","title":"2019년 8월 고용동향","url":"https://mods.go.kr/board.es?act=view&bid=210&list_no=377478&mid=a10301030100&ref_bid=&tag=","publisher":"통계청","published_at":"2019-09-11","summary":"2019년 8월 취업자는 전년 동월보다 45만2000명 증가했어요. 두 글이 공통으로 다루는 수치예요.","metadata_status":"assistant_selection"},{"release_id":"3bd28debc6dce7d59c4c","title":"2026년 9월 산업활동동향","url":"https://mods.go.kr/board.es?mid=a10301050100&act=view&bid=216&list_no=447747","publisher":"국가데이터처","published_at":"2026-10-30","summary":"2026년 9월 전산업생산은 전월보다 3.0%, 소매판매는 3.6%, 설비투자는 5.3% 증가했어요. 두 글이 공통으로 다루는 통계예요.","metadata_status":"assistant_selection"}],"rssTitles":["2019년 8월 고용동향","2026년 9월 산업활동동향"],"queryMetrics":[],"articleSelections":{"version":1,"method":"assistant_selection","reviewer":"assistant","userApproved":true,"reviewedAt":"2026-11-03","verificationMethod":"indexed_source_text_review","revision":"216f96bb8b2f391077b4ca60ad2b476e6be81563084610c26539aced11096487","comparisons":[{"id":"employment-quality-2019-08","question":"취업자 증가는 고용의 질 개선을 뜻할까요?","label":"고용의 질에 대한 해석 차이","releaseId":"03fccc8ba9b234cc7382","articleA":"6771042e3cc2d672948c","articleB":"fd888bfcb213a56830fe"},{"id":"economic-recovery-2026-09","question":"9월 지표 반등은 지속적인 경기 회복으로 이어질까요?","label":"경기 회복의 지속성에 대한 해석 차이","releaseId":"3bd28debc6dce7d59c4c","articleA":"8981c08c42162c918593","articleB":"d92b39ab85874ead9691"}],"articleIds":["6771042e3cc2d672948c","fd888bfcb213a56830fe","8981c08c42162c918593","d92b39ab85874ead9691"],"releaseIds":["03fccc8ba9b234cc7382","3bd28debc6dce7d59c4c"]}}</script>
+<script>
+(() => {
+"use strict";
+/** Shared formatting for text rendered by the news portal. */
+const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
+  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+})[character]);
+
+const formatDate = value => (value || '').slice(0, 10).replaceAll('-', '.');
+
+function readable(value) {
+  const text = String(value ?? '');
+  let result = '', cursor = 0;
+  for (const match of text.matchAll(/[+−△]?\d+(?:[,.]\d+)*/g)) {
+    result += escapeHtml(text.slice(cursor, match.index));
+    result += `<span class="num">${escapeHtml(match[0])}</span>`;
+    cursor = match.index + match[0].length;
+  }
+  return result + escapeHtml(text.slice(cursor));
+}
+
+/** Keep all collected articles visible and require source evidence for comparisons. */
+function findSourceMentions(text, sources) {
+  const variants = [];
+  for (const release of sources) {
+    const title = release.title || '';
+    const short = title.replace(/\([^)]*\)/g, '').replace(/보도자료/g, '').replace(/결과\s*$/, '');
+    for (const value of new Set([title, short])) {
+      const characters = [...value].filter(character => !/[\s「」『』“”‘’"']/u.test(character));
+      if (characters.length < 6) continue;
+      const pattern = characters.map(character => character.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('[\\s「」『』“”‘’"\']*');
+      variants.push({ release, pattern, length: characters.length });
+    }
+  }
+  if (!variants.length) return [];
+  variants.sort((a, b) => b.length - a.length);
+  const pattern = new RegExp(variants.map(variant => `(${variant.pattern})`).join('|'), 'gu');
+  return [...String(text).matchAll(pattern)].map(match => ({
+    start: match.index, end: match.index + match[0].length,
+    release: variants[match.slice(1).findIndex(value => value !== undefined)].release,
+  }));
+}
+
+function createComparisonModel(data) {
+  const releases = new Map((data.releases || []).map(release => [release.release_id, release]));
+  const sourceIds = article => [...new Set(article?.matchedReleaseIds || [])].filter(id => releases.has(id));
+  const filterSourceIds = article => [...new Set([...(article?.releaseIds || []), ...sourceIds(article)])].filter(id => releases.has(id));
+  const articles = new Map((data.articles || []).map(article => [article.id, article]));
+  const usedSources = new Set([...articles.values()].flatMap(filterSourceIds));
+  const visibleReleases = [...releases.values()].filter(release => usedSources.has(release.release_id));
+  const cache = new Map();
+  function relationsFor(article, releaseId, kind) {
+    if (!article || !articles.has(article.id) || !sourceIds(article).includes(releaseId) || !['related', 'opposed'].includes(kind)) return [];
+    const key = `${article.id}:${releaseId}:${kind}`;
+    if (cache.has(key)) return cache.get(key);
+    const seen = new Set();
+    const result = (article.relations?.[kind] || []).filter(item => {
+      const other = articles.get(item.articleId);
+      if (!other || other.id === article.id || seen.has(other.id) || !item.releaseIds?.includes(releaseId) || !sourceIds(other).includes(releaseId)) return false;
+      seen.add(other.id);
+      return true;
+    });
+    cache.set(key, result);
+    return result;
+  }
+  function comparisonCount(article, releaseId) {
+    return new Set(['related', 'opposed'].flatMap(kind => relationsFor(article, releaseId, kind).map(item => item.articleId))).size;
+  }
+  return { articles, releases, visibleReleases, sourceIds, filterSourceIds, relationsFor, comparisonCount,
+    sourcesFor: article => sourceIds(article).map(id => releases.get(id)),
+     searchSourcesFor: article => filterSourceIds(article).map(id => releases.get(id)),
+    canCompare: (article, releaseId) => comparisonCount(article, releaseId) > 0 };
+}
+
+const esc = escapeHtml, date = formatDate;
+async function loadPortal() {
+  return JSON.parse(document.getElementById("prism-data").textContent);
+}
+
+(async () => {
+  "use strict";
+  const main = document.getElementById("main");
+  const articleUrl = article => `#/article/${article.id}`;
+  let data;
+  main.setAttribute("aria-busy", "true");
+  main.innerHTML = '<p class="panel-empty" role="status">뉴스를 불러오고 있어요.</p>';
+  try {
+    data = await loadPortal();
+  } catch (error) {
+    console.error("Prism data loading failed:", error);
+    main.innerHTML = '<div class="empty-search"><h1>뉴스를 불러오지 못했어요.</h1><p>잠시 후 페이지를 새로고침해 주세요.</p></div>';
+    main.removeAttribute("aria-busy");
+    return;
+  }
+  main.removeAttribute("aria-busy");
+  const model = createComparisonModel(data);
+  const { articles, releases } = model;
+  const state = { article: null, releaseId: null, relation: "related", returnFocus: null, homeHash: "#/" };
+  const PAGE_SIZE = 24;
+  const mobileViewport = window.matchMedia("(max-width: 760px)");
+  const image = (article, lazy = true) => `<img src="${esc(article.imageUrl || "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNTQwIiBmaWxsPSJub25lIj4NCjxyZWN0IHdpZHRoPSI5MDAiIGhlaWdodD0iNTQwIiBmaWxsPSIjZTdlNGRkIi8+PGNpcmNsZSBjeD0iNjg0IiBjeT0iMTQ4IiByPSIxMjYiIGZpbGw9IiNmM2YwZTgiLz48cGF0aCBkPSJtMTY4IDQxNCAyOTEtMTY4IDI5OCAxNzQtMzAwIDE3MVoiIGZpbGw9IiNiNGFkYTEiIG9wYWNpdHk9Ii4zIi8+DQo8cGF0aCBkPSJtNDQ5IDEwOSAyMjMgMTM1LTIyMyAxMzItMjIxLTEzMloiIGZpbGw9IiNmNWYxZTgiLz48cGF0aCBkPSJNMjI4IDI0NHYxNzRsMjIxIDEzMlYzNzZaIiBmaWxsPSIjYTk5ZjkyIi8+PHBhdGggZD0iTTQ0OSAzNzYgNjcyIDI0NHYxNzRMNDQ5IDU1MFoiIGZpbGw9IiNjNWJiYWEiLz4NCjxwYXRoIGQ9Im0zMDcgMjkxIDUwIDMwdjY0bC01MC0zMFptOTEgNTUgMjggMTd2NjRsLTI4LTE3WiIgZmlsbD0iI2RmZDdjYSIvPjxwYXRoIGQ9Im01MDMgMzQ2IDUxLTMwdjY0bC01MSAzMFptOTEtNTUgMjgtMTd2NjRsLTI4IDE3WiIgZmlsbD0iI2VlZTdkYyIvPg0KPHBhdGggZD0ibTM4MSAxNjQgNjgtNDAgNjYgNDEtNjYgMzlaIiBzdHJva2U9IiM4NTc4NjkiIHN0cm9rZS13aWR0aD0iMyIvPjxwYXRoIGQ9Ik00NDkgMTI0djgwIiBzdHJva2U9IiM4NTc4NjkiIHN0cm9rZS13aWR0aD0iMiIvPg0KPC9zdmc+DQo=")}" alt="" width="900" height="540" loading="${lazy ? "lazy" : "eager"}" decoding="async" referrerpolicy="no-referrer" data-news-image>`;
+  function releaseLink(release) {
+    let target;
+    try { target = new URL(release.url); } catch { /* Missing links stay plain text. */ }
+    return target && ["http:", "https:"].includes(target.protocol) && !target.username && !target.password
+      ? `<a class="rss-source" href="${esc(target.href)}" target="_blank" rel="noopener noreferrer">통계자료 원문 ↗</a>` : "";
+  }
+  function sourceControl(article, release, label = release.title, { inline = false, home = false } = {}) {
+    const classes = `statistic-source${inline ? " inline-source" : ""}`;
+    const count = model.comparisonCount(article, release.release_id);
+    if (!count) return `<span class="${classes} unavailable" title="현재 비교할 다른 기사가 없어요.">${readable(label)}</span>`;
+    const description = `${release.title}: 같은 자료를 사용한 기사 ${count}건과 주장 비교`;
+    if (home) return `<a class="${classes}" href="${articleUrl(article)}?release=${release.release_id}" aria-label="${esc(description)}">${readable(label)}<span aria-hidden="true"> ↗</span></a>`;
+    return `<button type="button" class="${classes}" data-source="${release.release_id}" aria-controls="related-panel" aria-pressed="${state.releaseId === release.release_id}" aria-label="${esc(description)}">${readable(label)}<span aria-hidden="true"> ↗</span></button>`;
+  }
+  function sourceNames(article, { home = false } = {}) {
+    const supported = model.sourcesFor(article);
+    if (supported.length) return supported.map(release => sourceControl(article, release, release.title, { home })).join("");
+    return model.searchSourcesFor(article).map(release => `<span class="rss-source unverified">${esc(release.title)}</span>`).join("");
+  }
+  function sourceLabel(article) {
+    return model.sourceIds(article).length ? "자료 연결 근거" : "검색 기준 · 자료 사용 미확인";
+  }
+  function newsCard(article) {
+    return `<article class="news-story news-card" data-news-id="${article.id}"><a href="${articleUrl(article)}"><div class="image-wrap">${image(article)}</div><h2>${readable(article.title)}</h2><p class="lead-deck">${readable(article.summary)}</p><div class="byline"><span>${esc(article.publisher)}</span><time datetime="${esc(article.providedAt)}">${date(article.providedAt)}</time></div></a><div class="news-sources"><span>${sourceLabel(article)}</span>${sourceNames(article, { home: true })}</div></article>`;
+  }
+  function homeLink(params, changes = {}) {
+    const next = new URLSearchParams(params);
+    for (const [key, value] of Object.entries(changes)) value ? next.set(key, String(value)) : next.delete(key);
+    return `#/${next.size ? "?" + next.toString() : ""}`;
+  }
+  function diversify(items) {
+    const queues = new Map();
+    for (const item of items) {
+      if (!queues.has(item.publisher)) queues.set(item.publisher, []);
+      queues.get(item.publisher).push(item);
+    }
+    const result = [];
+    while (result.length < items.length) for (const queue of queues.values()) if (queue.length) result.push(queue.shift());
+    return result;
+  }
+  function home(params) {
+    state.article = null;
+    state.releaseId = null;
+    state.homeHash = location.hash || "#/";
+    const query = params.get("q")?.trim() || "";
+    const selectedRelease = params.get("release") || "";
+    const sort = params.get("sort") === "recent" ? "recent" : "diverse";
+    document.getElementById("search").value = query;
+    document.title = "Prism · 하나의 자료, 여러 시선";
+    let pool = [...articles.values()].filter(article => {
+      if (!params.has("updates") && article.duplicateOf && articles.has(article.duplicateOf)) return false;
+      if (params.has("evidence") && !model.sourceIds(article).length) return false;
+      if (selectedRelease && !model.filterSourceIds(article).includes(selectedRelease)) return false;
+      const haystack = `${article.title} ${article.summary} ${article.body} ${article.publisher} ${model.searchSourcesFor(article).map(release => release.title).join(" ")}`.toLowerCase();
+      return !query || query.toLowerCase().split(/\s+/).every(term => haystack.includes(term));
+    });
+    pool.sort((a, b) => b.providedAt.localeCompare(a.providedAt));
+    if (sort === "diverse") pool = diversify(pool);
+    const pageCount = Math.max(1, Math.ceil(pool.length / PAGE_SIZE));
+    const requested = Number(params.get("page")) || 1;
+    const page = Math.min(pageCount, Math.max(1, Math.floor(requested)));
+    const start = (page - 1) * PAGE_SIZE, selected = pool.slice(start, start + PAGE_SIZE);
+    let content = `<div class="home-heading"><div><p class="eyebrow">하나의 통계자료, 여러 시선</p><h1>${query ? `‘${esc(query)}’ 검색 결과` : "통계로 읽는 뉴스"}</h1><p class="home-description">기사 속 통계자료를 선택하고 관련된 주장과 상반된 주장을 비교해 보세요.</p></div><div class="collection-meta">${data.meta.collectedAt ? `<span>수집 ${date(data.meta.collectedAt)}</span>` : ""}<span>전체 기사 ${articles.size}건</span></div></div>
+      <div class="news-filters"><label><span class="sr-only">통계자료 선택</span><select id="release-filter"><option value="">모든 통계자료</option>${model.visibleReleases.map(release => `<option value="${release.release_id}" ${selectedRelease === release.release_id ? "selected" : ""}>${esc(release.title)}</option>`).join("")}</select></label><label><span class="sr-only">기사 정렬</span><select id="sort-news"><option value="diverse" ${sort === "diverse" ? "selected" : ""}>다양한 언론사순</option><option value="recent" ${sort === "recent" ? "selected" : ""}>최신순</option></select></label><label class="check-filter"><input type="checkbox" id="source-only" ${params.has("evidence") ? "checked" : ""}>자료 연결 근거가 있는 기사만</label><label class="check-filter"><input type="checkbox" id="show-updates" ${params.has("updates") ? "checked" : ""}>유사 제목 기사 포함</label></div>
+      <p class="result-count" role="status">${pool.length}건${pool.length ? ` 중 ${start + 1}–${start + selected.length}건` : ""}</p>`;
+    if (!selected.length) content += `<div class="empty-search"><h2>조건에 맞는 기사가 없어요.</h2><p>검색어나 통계자료 필터를 바꿔 보세요.</p><a class="text-button" href="#/">전체 기사 보기</a></div>`;
+    else content += `<div class="news-grid">${selected.map(newsCard).join("")}</div>`;
+    if (pageCount > 1) {
+      content += `<nav class="pagination" aria-label="기사 목록 페이지">${page > 1 ? `<a href="${homeLink(params, { page: page - 1 })}" rel="prev">이전</a>` : '<span aria-disabled="true">이전</span>'}`;
+      for (let n = Math.max(1, page - 2); n <= Math.min(pageCount, page + 2); n++) content += `<a href="${homeLink(params, { page: n })}" ${n === page ? 'aria-current="page"' : ""}>${n}</a>`;
+      content += `${page < pageCount ? `<a href="${homeLink(params, { page: page + 1 })}" rel="next">다음</a>` : '<span aria-disabled="true">다음</span>'}<span>${page} / ${pageCount}</span></nav>`;
+    }
+    main.innerHTML = content;
+  }
+  function articleText(article, text) {
+    let result = "", cursor = 0;
+    for (const mention of findSourceMentions(text, model.sourcesFor(article))) {
+      result += readable(text.slice(cursor, mention.start));
+      result += sourceControl(article, mention.release, text.slice(mention.start, mention.end), { inline: true });
+      cursor = mention.end;
+    }
+    return result + readable(text.slice(cursor));
+  }
+  function bodyHtml(article) {
+    if (article.bodyStatus === "selected_excerpt") return `<div class="body-unavailable"><h2>기사 발췌문</h2><blockquote>${readable(article.body)}</blockquote><p>${readable(article.summary)}</p><p class="body-notice">기사의 일부 내용이에요. 전체 내용은 기사 원문에서 확인해 주세요.</p></div>`;
+    if (!article.body) return `<div class="body-unavailable"><h2>기사 요약</h2><p>${readable(article.summary)}</p><p class="body-notice">본문을 확보하지 못했어요. 기사 원문에서 전체 내용을 확인해 주세요.</p></div>`;
+    return article.body.split(/\r?\n/).filter(line => line.trim()).map(line => `<p>${articleText(article, line)}</p>`).join("");
+  }
+  function articlePage(id, params) {
+    const article = articles.get(id);
+    if (state.article?.id !== id) { state.relation = "related"; state.returnFocus = null; }
+    state.article = article || null;
+    const requested = params.get("release");
+    state.releaseId = model.canCompare(article, requested) ? requested : null;
+    if (state.releaseId) state.relation = model.relationsFor(article, state.releaseId, "related").length ? "related" : "opposed";
+    document.getElementById("search").value = "";
+    if (!article) {
+      document.title = "기사를 찾을 수 없어요 · Prism";
+      main.innerHTML = '<div class="empty-search"><h1>기사를 찾을 수 없어요.</h1><a class="text-button" href="#/">전체 기사 보기</a></div>';
+      return;
+    }
+    document.title = `${article.title} · Prism`;
+    main.innerHTML = `<div class="article-topline"><a href="${esc(state.homeHash)}">기사 목록</a><span>/ 뉴스</span></div><div class="reading-layout"><article class="reading-column"><header class="article-header"><h1>${readable(article.title)}</h1><div class="article-meta"><span class="source-name">${esc(article.publisher)}</span>${article.providedAt ? `<time datetime="${esc(article.providedAt)}">발행 ${date(article.providedAt)} ${esc(article.providedAt.slice(11, 16))}</time>` : ""}<a href="${esc(article.url)}" target="_blank" rel="noopener noreferrer">기사 원문 ↗</a></div><div class="article-statistics"><span>${sourceLabel(article)}</span><div>${sourceNames(article)}</div></div></header><figure class="article-visual">${image(article, false)}</figure><section class="article-body" aria-label="기사 본문">${bodyHtml(article)}</section></article><aside class="related-panel" id="related-panel" aria-labelledby="related-heading" tabindex="-1"></aside></div><button type="button" class="mobile-panel-trigger" id="open-panel" ${state.releaseId ? "" : "hidden"}>선택한 통계자료의 주장 비교 ↑</button><button type="button" class="sheet-backdrop" id="sheet-backdrop" tabindex="-1" aria-label="주장 비교 닫기"></button><p id="panel-status" class="sr-only" role="status" aria-live="polite"></p>`;
+    renderPanel();
+    if (state.releaseId && mobileViewport.matches) openPanel();
+  }
+  function relationItems() {
+    return model.relationsFor(state.article, state.releaseId, state.relation);
+  }
+  function renderPanel() {
+    const items = relationItems();
+    const opposed = state.relation === "opposed";
+    const panel = document.getElementById("related-panel");
+    const release = releases.get(state.releaseId);
+    if (!release) {
+      panel.innerHTML = '<div class="panel-heading"><h2 id="related-heading">통계자료로 주장 비교</h2></div><div class="panel-empty"><p>기사 속 통계자료를 선택해 주세요. 같은 자료를 사용한 기사들의 주장을 비교할 수 있어요.</p></div>';
+      document.getElementById("panel-status").textContent = "";
+      return;
+    }
+    panel.innerHTML = `<div class="panel-heading"><h2 id="related-heading">주장 비교</h2><button id="close-panel" class="panel-close" type="button" aria-label="주장 비교 닫기">×</button></div><p class="selected-source">${readable(release.title)}</p><div class="relation-tabs" role="tablist" aria-label="비교할 주장"><button type="button" id="tab-related" role="tab" aria-selected="${!opposed}" aria-controls="related-list" tabindex="${opposed ? -1 : 0}">관련된 주장</button><button type="button" id="tab-opposed" role="tab" aria-selected="${opposed}" aria-controls="related-list" tabindex="${opposed ? 0 : -1}">상반된 주장</button></div><div id="related-list" role="tabpanel" aria-labelledby="tab-${state.relation}">${items.length ? items.map(item => {
+      const article = articles.get(item.articleId);
+      return `<article class="related-card"><a href="${articleUrl(article)}"><div class="image-wrap">${image(article)}</div><h3>${readable(article.title)}</h3><div class="byline"><span>${esc(article.publisher)}</span><time>${date(article.providedAt)}</time></div></a><button type="button" class="compare-button" data-compare="${article.id}">두 주장 나란히 보기 ↗</button></article>`;
+    }).join("") : `<div class="panel-empty"><h3>${opposed ? "상반된 주장 근거를 찾지 못했어요." : "비교할 기사 근거가 아직 부족해요."}</h3><p>${opposed ? "분석한 기사와 확보한 본문 범위에서 찾은 결과예요. 실제로 상반된 기사가 없다는 뜻은 아니에요." : "본문을 확보하고 자료 연결 근거를 찾으면 여기에 표시돼요."}</p></div>`}</div>`;
+    document.getElementById("panel-status").textContent = `${release.title}: ${opposed ? "상반된 주장" : "관련된 주장"} ${items.length}건`;
+  }
+  function updateSourceControls() {
+    document.querySelectorAll("button[data-source]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.source === state.releaseId)));
+    const trigger = document.getElementById("open-panel");
+    if (trigger) trigger.hidden = !state.releaseId;
+  }
+  function selectSource(releaseId, trigger) {
+    if (!model.canCompare(state.article, releaseId)) return;
+    state.releaseId = releaseId;
+    state.relation = model.relationsFor(state.article, releaseId, "related").length ? "related" : "opposed";
+    state.returnFocus = trigger;
+    updateSourceControls();
+    renderPanel();
+    openPanel();
+  }
+  function dismissPanel() {
+    if (mobileViewport.matches) { closePanel(); return; }
+    state.releaseId = null;
+    updateSourceControls();
+    renderPanel();
+    state.returnFocus?.focus({ preventScroll: true });
+  }
+  function openComparison(id) {
+    const item = relationItems().find(entry => entry.articleId === id);
+    const other = articles.get(id), current = state.article;
+    if (!item || !other || !current) return;
+    const column = (article, quote) => `<article><header class="comparison-article-heading"><div class="byline"><span>${esc(article.publisher)}</span><time>${date(article.providedAt)}</time></div><h3><a href="${articleUrl(article)}">${readable(article.title)}</a></h3></header><div class="comparison-thumbnail">${image(article, false)}</div><figure class="comparison-excerpt"><figcaption>기사 발췌문${article.speaker ? ` · ${esc(article.speaker)}` : ""}</figcaption><blockquote cite="${esc(article.url)}">${readable(quote)}</blockquote></figure><a class="text-button" href="${esc(article.url)}" target="_blank" rel="noopener noreferrer">기사 원문 ↗</a></article>`;
+    const release = releases.get(state.releaseId);
+    document.getElementById("comparison-content").innerHTML = `<p class="comparison-context">${esc(item.qualification || item.reason || "")}</p><div class="comparison-columns">${column(current, item.currentEvidence)}${column(other, item.otherEvidence)}</div><div class="comparison-sources"><h3>선택한 통계자료</h3><span>${esc(release.title)}</span>${releaseLink(release)}</div>`;
+    document.getElementById("comparison-title").textContent = state.relation === "opposed" ? "상반된 주장 비교" : "관련된 주장 비교";
+    document.getElementById("comparison-dialog").showModal();
+  }
+  function toggleInert(value) {
+    [".site-header", ".site-footer", ".article-topline", ".reading-column", "#open-panel"].forEach(selector => {
+      const element = document.querySelector(selector);
+      if (element) {
+        element.inert = value;
+        if (!value) element.removeAttribute("inert");
+      }
+    });
+  }
+  function openPanel() {
+    if (!state.releaseId) return;
+    const panel = document.getElementById("related-panel");
+    if (!mobileViewport.matches) { panel?.scrollIntoView({ block: "nearest" }); panel?.focus({ preventScroll: true }); return; }
+    if (document.activeElement?.id === "open-panel") state.returnFocus = document.activeElement;
+    if (!state.returnFocus) state.returnFocus = document.querySelector(`button[data-source="${state.releaseId}"]`);
+    document.body.classList.add("sheet-open");
+    toggleInert(true);
+    panel.setAttribute("role", "dialog");
+    panel.setAttribute("aria-modal", "true");
+    document.getElementById("close-panel").focus({ preventScroll: true });
+  }
+  function closePanel(restoreFocus = true) {
+    const wasOpen = document.body.classList.contains("sheet-open");
+    document.body.classList.remove("sheet-open");
+    toggleInert(false);
+    const panel = document.getElementById("related-panel");
+    panel?.removeAttribute("role"); panel?.removeAttribute("aria-modal");
+    if (restoreFocus && wasOpen) state.returnFocus?.focus({ preventScroll: true });
+  }
+  function route() {
+    if (location.hash === "#main") { main.focus(); return; }
+    closePanel(false);
+    const dialog = document.getElementById("comparison-dialog");
+    if (dialog.open) dialog.close();
+    const [path, query = ""] = location.hash.slice(1).split("?");
+    const match = /^\/article\/([a-f0-9]{20})$/.exec(path);
+    if (match) articlePage(match[1], new URLSearchParams(query)); else home(new URLSearchParams(query));
+    window.scrollTo(0, 0);
+  }
+  document.addEventListener("error", event => {
+    const target = event.target;
+    if (!target.matches?.("img[data-news-image]") || target.dataset.fallback) return;
+    target.dataset.fallback = "true"; target.src = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNTQwIiBmaWxsPSJub25lIj4NCjxyZWN0IHdpZHRoPSI5MDAiIGhlaWdodD0iNTQwIiBmaWxsPSIjZTdlNGRkIi8+PGNpcmNsZSBjeD0iNjg0IiBjeT0iMTQ4IiByPSIxMjYiIGZpbGw9IiNmM2YwZTgiLz48cGF0aCBkPSJtMTY4IDQxNCAyOTEtMTY4IDI5OCAxNzQtMzAwIDE3MVoiIGZpbGw9IiNiNGFkYTEiIG9wYWNpdHk9Ii4zIi8+DQo8cGF0aCBkPSJtNDQ5IDEwOSAyMjMgMTM1LTIyMyAxMzItMjIxLTEzMloiIGZpbGw9IiNmNWYxZTgiLz48cGF0aCBkPSJNMjI4IDI0NHYxNzRsMjIxIDEzMlYzNzZaIiBmaWxsPSIjYTk5ZjkyIi8+PHBhdGggZD0iTTQ0OSAzNzYgNjcyIDI0NHYxNzRMNDQ5IDU1MFoiIGZpbGw9IiNjNWJiYWEiLz4NCjxwYXRoIGQ9Im0zMDcgMjkxIDUwIDMwdjY0bC01MC0zMFptOTEgNTUgMjggMTd2NjRsLTI4LTE3WiIgZmlsbD0iI2RmZDdjYSIvPjxwYXRoIGQ9Im01MDMgMzQ2IDUxLTMwdjY0bC01MSAzMFptOTEtNTUgMjgtMTd2NjRsLTI4IDE3WiIgZmlsbD0iI2VlZTdkYyIvPg0KPHBhdGggZD0ibTM4MSAxNjQgNjgtNDAgNjYgNDEtNjYgMzlaIiBzdHJva2U9IiM4NTc4NjkiIHN0cm9rZS13aWR0aD0iMyIvPjxwYXRoIGQ9Ik00NDkgMTI0djgwIiBzdHJva2U9IiM4NTc4NjkiIHN0cm9rZS13aWR0aD0iMiIvPg0KPC9zdmc+DQo=";
+  }, true);
+  document.addEventListener("click", event => {
+    const button = event.target.closest("button"), id = button?.id;
+    if (button?.dataset.source) selectSource(button.dataset.source, button);
+    if (id === "tab-related" || id === "tab-opposed") { state.relation = id.slice(4); renderPanel(); document.getElementById(id).focus(); }
+    if (button?.dataset.compare) openComparison(button.dataset.compare);
+    if (id === "comparison-close") document.getElementById("comparison-dialog").close();
+    if (id === "open-panel") openPanel();
+    if (id === "close-panel") dismissPanel();
+    if (id === "sheet-backdrop") closePanel();
+    if (id === "footer-info") document.getElementById("info-dialog").showModal();
+    if (id === "info-close") document.getElementById("info-dialog").close();
+  });
+  document.addEventListener("change", event => {
+    const changes = { "release-filter": "release", "sort-news": "sort", "show-updates": "updates", "source-only": "evidence" };
+    if (!(event.target.id in changes)) return;
+    const value = event.target.type === "checkbox" ? (event.target.checked ? "1" : "") : event.target.value;
+    location.hash = homeLink(new URLSearchParams(location.hash.split("?")[1] || ""), { [changes[event.target.id]]: value, page: "" }).slice(1);
+  });
+  document.addEventListener("keydown", event => {
+    if (event.target.getAttribute?.("role") === "tab" && ["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) {
+      event.preventDefault(); state.relation = event.key === "Home" ? "related" : event.key === "End" ? "opposed" : state.relation === "related" ? "opposed" : "related";
+      renderPanel(); document.getElementById("tab-" + state.relation).focus(); return;
+    }
+    if (document.getElementById("comparison-dialog").open || document.getElementById("info-dialog").open) return;
+    if (event.key === "Escape" && state.releaseId && !mobileViewport.matches) { event.preventDefault(); dismissPanel(); return; }
+    if (!document.body.classList.contains("sheet-open")) return;
+    if (event.key === "Escape") { event.preventDefault(); closePanel(); return; }
+    if (event.key !== "Tab") return;
+    const items = [...document.querySelectorAll('#related-panel a[href], #related-panel button:not([tabindex="-1"])')].filter(element => element.getClientRects().length);
+    const first = items[0], last = items.at(-1);
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+  });
+  document.getElementById("search-form").addEventListener("submit", event => {
+    event.preventDefault();
+    const params = state.article ? new URLSearchParams() : new URLSearchParams(location.hash.split("?")[1] || "");
+    location.hash = homeLink(params, { q: document.getElementById("search").value.trim(), page: "" }).slice(1);
+  });
+  window.addEventListener("hashchange", route);
+  const restoreDesktop = () => { if (!window.matchMedia("(max-width: 760px)").matches) closePanel(); };
+  const viewportChanged = () => { restoreDesktop(); window.requestAnimationFrame?.(restoreDesktop); };
+  mobileViewport.addEventListener("change", viewportChanged);
+  window.addEventListener("resize", viewportChanged);
+  window.addEventListener("focus", viewportChanged);
+  window.visualViewport?.addEventListener("resize", viewportChanged);
+  if (typeof ResizeObserver === "function") new ResizeObserver(viewportChanged).observe(document.documentElement);
+  route();
+})();
+
+})();
+</script>
+</body>
+</html>

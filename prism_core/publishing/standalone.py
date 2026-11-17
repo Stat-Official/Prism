@@ -37,12 +37,13 @@ def _inline_json(data):
             .replace('<', '\\u003c').replace('\u2028', '\\u2028').replace('\u2029', '\\u2029'))
 
 
-def export_html():
+def export_html(*, output: str | None = None, force: bool = False):
     web = BASE / 'web'
     assets = web / 'assets'
     data = _portal_data(web)
     html = (web / 'index.html').read_text(encoding='utf-8')
     css = (assets / 'css/styles.css').read_text(encoding='utf-8')
+    editorial_css = (assets / 'css/editorial.css').read_text(encoding='utf-8')
 
     def svg_url(name):
         encoded = base64.b64encode((assets / 'images' / name).read_bytes()).decode('ascii')
@@ -67,19 +68,34 @@ def export_html():
         app,
         '})();',
     ])
-    if '</script' in javascript.lower() or '</style' in css.lower():
+    if '</script' in javascript.lower() or any('</style' in source.lower() for source in (css, editorial_css)):
         raise ValueError('Portal assets contain an unsupported HTML closing tag.')
     html, styles = re.subn(
         r'<link rel="stylesheet" href="assets/css/styles\.css[^\"]*">',
         lambda match: '<style>\n' + css + '\n</style>', html)
+    html, editorials = re.subn(
+        r'<link rel="stylesheet" href="assets/css/editorial\.css[^"]*">',
+        lambda match: '<style>\n' + editorial_css + '\n</style>', html)
     html, scripts = re.subn(
         r'\s*<script src="assets/js/app\.js[^\"]*" type="module"></script>', '', html)
-    if styles != 1 or scripts != 1:
+    if styles != 1 or editorials != 1 or scripts != 1:
         raise ValueError('The portal asset references changed; update the standalone exporter.')
     html = html.replace('assets/images/prism.svg', svg_url('prism.svg'))
     embedded = ('<script id="prism-data" type="application/json">' + _inline_json(data) +
                 '</script>\n<script>\n' + javascript + '\n</script>\n')
     html = html.replace('</body>', embedded + '</body>', 1)
-    output = BASE / 'Prism.html'
-    atomic_write(output, html)
-    return output
+    destination = (BASE / (output or 'Prism.html')).resolve()
+    if destination.parent != BASE.resolve() or destination.suffix.lower() != '.html':
+        raise ValueError('Output must be an HTML filename in the project folder.')
+    if destination.exists():
+        previous = destination.read_text(encoding='utf-8')
+        if previous == html:
+            return destination
+        if not force:
+            raise FileExistsError(
+                f'{destination.name} already exists with different content. '
+                'Existing articles and custom design were preserved. '
+                'Use --output Prism.preview.html for a separate preview '
+                'or --force to explicitly replace the existing file.')
+    atomic_write(destination, html)
+    return destination

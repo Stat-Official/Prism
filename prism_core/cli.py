@@ -45,7 +45,9 @@ def main() -> int:
     server.add_argument('--port', type=int, default=8000)
     commands.add_parser('prepare-model', help='Prepare pinned local Korean NLI weights')
     commands.add_parser('demo', help='Rebuild the offline preview from approved comparisons')
-    commands.add_parser('export', help='Save the current portal as a standalone Prism.html file')
+    exporter = commands.add_parser('export', help='Save a standalone HTML without overwriting existing edits')
+    exporter.add_argument('--output', help='HTML filename in the project folder, e.g. Prism.preview.html')
+    exporter.add_argument('--force', action='store_true', help='Explicitly allow replacing an existing HTML file')
     cleanup = commands.add_parser('clean', help='List obsolete snapshots; keep current and last build per collection')
     cleanup.add_argument('--apply', action='store_true', help='Delete the listed intermediate snapshots')
     report = commands.add_parser('report', help='Print saved collection and analysis metrics')
@@ -62,7 +64,7 @@ def main() -> int:
             return 0
         if args.command == 'export':
             from prism_core.publishing.standalone import export_html
-            print('Saved standalone page: ' + str(export_html()))
+            print('Saved standalone page: ' + str(export_html(output=args.output, force=args.force)))
             return 0
         if args.command == 'clean':
             from prism_core.publishing.cleanup import clean_snapshots
