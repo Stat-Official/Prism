@@ -1,6 +1,6 @@
 # 📰 Prism: 하나의 자료, 여러 시선
 <p align="center">
-    <img width="469" height="800" alt="image" src="https://github.com/user-attachments/assets/2b138ff0-63b8-4f17-9cd7-eab5657422fc" />
+    <img width="474" height="869" alt="image" src="https://github.com/user-attachments/assets/23fe5c34-e395-4ad2-9ce8-144a8695b361" />
 </p>
 
 **🔭 통계 보도자료에서 시작해, 다양한 뉴스로 시선을 확장하다.**
